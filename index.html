@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     
+    <style>
+        body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: cursive;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+ .card{
+    width: 250px;
+    height: 350px;
+    perspective: 1500;
+    transition: 1s;
+}
+ .cover , .back_cover{
+    background-color: rgb(211, 33, 33);
+    width: 250px;
+    height: 350px;
+    border-radius: 0 15px 15px 0;
+    display: flex;
+    justify-content: center;
+    
+    align-items: flex-end;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+ .cover{
+     z-index: 1;
+     position: absolute;
+     transform-origin: center left;
+     transition: 1s;
+     /* display: none; */
+}
+.cover label{
+    width: 250px;
+    height: 350px;
+    cursor: pointer;
+    
+}
+.back_cover{
+     position: relative;
+    z-index: -1;
+}
+input{
+    display: none;
+}
+.page{
+    margin-top: 5px;
+    background: url("tem4.jpg");
+    background-size: contain;
+    background-size:240px 340px;
+    background-repeat: no-repeat;
+    width: 240px;
+    height: 340px;
+    border-radius: 0 15px 15px 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+
+}
+.cover h1{
+    width: 200px;
+     
+    color: white;
+}
+#ms{
+    margin-top: 0px;
+    background-color: rgba(204, 204, 241, 0);
+    width: 210px;
+    height: 240px;
+    border-radius: 0 15px 15px 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly; 
+    align-items: center;
+    text-align: center;
+    z-index: 0;
+
+}
+#ms p{
+    font-size: 10px;
+
+}
+#ms h1{
+    font-size: 20px;
+}
+#ms h3{
+    font-size: 10px;
+}
+#flip:checked ~ .card .cover{
+     transform: rotateY(-180deg);
+      
+
+}
+#flip:checked ~ .card{
+    
+    transform: translateX(40px);
+}
+
+#create button{
+    width: 100px;
+    height: 30px;
+    color: white;
+    background-color: red;
+    border: 3px solid rgb(255, 255, 255);
+}
+#create button:hover{
+    width: 105px;
+    height: 33px;
+    color: rgb(255, 0, 0);
+    background-color: rgb(255, 255, 255);
+    border: 3px solid rgb(255, 0, 0);
+}
+ 
+    </style>
+</head>
+
+<body>
+    <h3>click below</h3>
+    <input type="checkbox" id="flip">
+    <div class="card">
+        <div class="cover">
+
+            <label for="flip"></label>
+        </div>
+        <div class="page" id="page">
+            <div id="ms">
+                <h1></h1>
+                <p id="body">Wishing you a Merry Christmas filled with love, joy, and memorable moments! May this festive season bring warmth to your heart and happiness to your home</p>
+                <h3></h3>
+            </div>
+        </div>
+        <div class="back_cover"></div>
+
+    </div>
+
+    <!-- <div id="create">
+        <p>To create your own christmas wish card then click the button below</p>
+        <button>Create</button> -->
+    </div>
+     
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, set, ref, child, update, remove, push, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4trdI5PrJs3W6yoWSGn39S4KFwL41N8A",
+            authDomain: "wish-box-ca6ea.firebaseapp.com",
+            databaseURL: "https://wish-box-ca6ea-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "wish-box-ca6ea",
+            storageBucket: "wish-box-ca6ea.appspot.com",
+            messagingSenderId: "1043895090410",
+            appId: "1:1043895090410:web:c0827e3d7d10d0461cab93"
+        };
+var userno;
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        var db = getDatabase();
+        const dbref = ref(db);
+        console.log(db);
+        var id=window.location.href;
+        var template=document.getElementById("page");
+        var wishes=["Sending you wishes for a Christmas filled with inner peace and the strength to face whatever challenges lie ahead. May the New Year bring new beginnings and blessings.","May the joy of Christmas fill your home with warmth and laughter. Wishing you a season of merrymaking and memories that last a lifetime.","From our family to yours, warmest wishes for a blessed Christmas filled with love, good health, and prosperity. May the New Year bring new beginnings and brighter days.","Sending you a big Kerala hug and a basketful of Christmas cheer! May your holidays be merry and bright, with plenty of delicious food, good company, and laughter.","May the Christmas spirit bring you solace and strength in times of need. Wishing you a season of peace, hope, and renewed faith.","Let the light of Christmas guide you through darkness and uncertainty. May the coming year bring brighter days and a renewed sense of purpose."];
+         
+        const randomDecimal = Math.random();
+
+  const randomNumber = Math.floor(randomDecimal * 5);
+        document.getElementById("body").innerText=wishes[randomNumber];
+        if( randomNumber==0)
+        {
+    template.style.background="url('tem4.jpg')";
+    template.style.backgroundSize="100% 100%";
+        }
+   else if( randomNumber==1){
+   template.style.background="url('temp5.jpg')";
+   template.style.backgroundSize="100% 100%";}
+
+
+   else if( randomNumber==2)
+   {
+   template.style.background="url('temp6.jpg')";
+   template.style.backgroundSize="100% 100%";}
+
+
+   else if( randomNumber==3)
+   {
+   template.style.background="url('temp2.jpg')";
+   template.style.backgroundSize="100% 100%";}
+
+
+   else if( randomNumber==4)
+   {
+   template.style.background="url('temp3.jpg')";
+   template.style.backgroundSize="100% 100%";}
+
+// var h1=document.getElementById("title");
+//         window.onload = () => {
+//              id=id.split("?");
+//         console.log(id)
+            
+
+//             get(child(dbref, "cards/ID1")).then((snapshot) => {
+//                 userno = Object.values(snapshot.val());
+//                 console.log(userno);
+                
+
+
+
+ 
+
+//             })
+            
+
+//         }
+
+
+    </script>
+</body>
+
+</html>

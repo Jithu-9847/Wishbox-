@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="create.css">
+</head>
+
+<body>
+    <nav>
+
+        <button>about</button>
+        <button>credit</button>
+    </nav>
+    <input type="checkbox" id="flip">
+    <div class="card">
+        <div class="cover">
+
+            <label for="flip"></label>
+        </div>
+        <div class="page" id="page">
+            <div id="ms">
+                <h1 id="title" contenteditable="true"></h1>
+                <p id="body" contenteditable="true" aria-placeholder="enter your wish..">Wishing you a Christmas filled
+                    with the love of family and friends</p>
+                <h3 id="name" contenteditable="true">-name</h3>
+            </div>
+        </div>
+        <div class="back_cover"></div>
+
+    </div>
+
+    <div id="edit">
+        <fieldset id="temps">
+            <legend>Templates</legend>
+            <button id="btn1" onclick="set1()"></button>
+            <button id="btn2" onclick="set2()"></button>
+            <button id="btn3" onclick="set3()"></button>
+            <button id="btn4" onclick="set4()"></button>
+            <button id="btn5" onclick="set5()"></button>
+        </fieldset>
+        <fieldset id="edit_txt">
+            <legend>Edit text</legend>
+            <button id="edit_title">Titile</button>
+            <button id="edit_body">Body</button>
+            <button id="edit_from">From</button>
+            <input type="text" id="input" placeholder="Enter the text...">
+
+        </fieldset>
+        <button id="create_btn">Create</button>
+
+
+    </div>
+    <p>To edit the text click on the reqired text or you can use the text input for entering text</p>
+    <div id="pop">
+        <h5>Copy the link and share with your friends and family</h5>
+
+        <input type="text" id="link">
+        <button id="copy">Copy</button>
+    </div>
+    <div id="block">
+
+    </div>
+    <script src="script.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, set, ref, child, update, remove, push, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4trdI5PrJs3W6yoWSGn39S4KFwL41N8A",
+            authDomain: "wish-box-ca6ea.firebaseapp.com",
+            databaseURL: "https://wish-box-ca6ea-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "wish-box-ca6ea",
+            storageBucket: "wish-box-ca6ea.appspot.com",
+            messagingSenderId: "1043895090410",
+            appId: "1:1043895090410:web:c0827e3d7d10d0461cab93"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        var db = getDatabase();
+        const dbref = ref(db);
+        console.log(db);
+
+
+
+
+
+        var template = document.getElementById("page");
+        var h1 = document.getElementById("title");
+        var temp = 0;
+        function set1() {
+            template.style.background = "url('tem4.jpg')";
+            template.style.backgroundSize = "100% 100%";
+            h1.innerText = "";
+            template.style.color = "black";
+            temp = 0;
+        }
+        function set2() {
+            template.style.background = "url('temp5.jpg')";
+            template.style.backgroundSize = "100% 100%";
+            template.style.color = "black";
+            h1.innerText = "Title";
+            temp = 1;
+        }
+        function set3() {
+            template.style.background = "url('temp6.jpg')";
+            template.style.backgroundSize = "100% 100%";
+            template.style.color = "black";
+            h1.innerText = "Title";
+            temp = 2;
+
+        }
+        function set4() {
+            template.style.background = "url('temp2.jpg')";
+            template.style.backgroundSize = "100% 100%";
+            template.style.color = "white";
+            h1.innerText = "Title";
+            temp = 3;
+        }
+        function set5() {
+            template.style.background = "url('temp3.jpg')";
+            template.style.backgroundSize = "100% 100%";
+            template.style.color = "black";
+            h1.innerText = "Title";
+            temp = 4;
+
+        }
+        var input = document.getElementById("input");
+        let current;
+        document.getElementById("edit_title").addEventListener("click", () => {
+            current = 1;
+        })
+        document.getElementById("edit_body").addEventListener("click", () => {
+            current = 2;
+        })
+        document.getElementById("edit_from").addEventListener("click", () => {
+            current = 3;
+        })
+
+        input.addEventListener("keyup", () => {
+            if (current == 1) {
+                document.getElementById("title").innerText = input.value;
+                document.getElementById("title").style.textAlign = "center";
+            }
+            else if (current == 2) {
+                document.getElementById("body").innerText = input.value;
+            }
+            else {
+                document.getElementById("from").innerText = input.value;
+            }
+        })
+        document.getElementById("block").addEventListener("click", () => {
+            document.getElementById("block").style.display = "none";
+            document.getElementById("pop").style.display = "none";
+        })
+
+        var userno;
+        window.onload = () => {
+
+            get(child(dbref, 'Userno')).then((snapshot) => {
+                userno = Object.values(snapshot.val());
+                console.log(userno);
+            })
+
+
+        }
+
+
+
+
+
+
+        document.getElementById("create_btn").addEventListener("click", () => {
+            var newuser = "ID" + (userno[0] + 1);
+            set(ref(db, "cards/ID" + (userno[0]+ 1)),
+                {
+
+                    template: temp,
+                    title: document.getElementById("title").innerText,
+                    wish: document.getElementById("body").innerText,
+                    from: document.getElementById("name").innerText,
+
+
+
+                }).then(() => {
+
+                    document.getElementById("pop").style.display = "block";
+                    document.getElementById("block").style.display = "block";
+                    document.getElementById("link").value = window.location.href + "?" + newuser;
+                    set(ref(db,"Userno"),
+                {
+
+                    no:(userno[0]+ 1)
+
+
+                })
+                get(child(dbref, 'Userno')).then((snapshot) => {
+                userno = Object.values(snapshot.val());
+                console.log(userno);
+            })
+                })
+        })
+
+        document.getElementById("copy").addEventListener("click", () => {
+            var copyText = document.getElementById("link");
+
+            copyText.setSelectionRange(0, 99999);
+
+
+            navigator.clipboard.writeText(copyText.value);
+
+
+            alert("Copied the text: " + copyText.value);
+        })
+
+
+
+
+
+    </script>
+</body>
+
+</html>
