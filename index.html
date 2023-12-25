@@ -139,7 +139,7 @@ input{
         </div>
         <div class="page" id="page">
             <div id="ms">
-                <h1></h1>
+                <h1 id="t"></h1>
                 <p id="body">Wishing you a Merry Christmas filled with love, joy, and memorable moments! May this festive season bring warmth to your heart and happiness to your home</p>
                 <h3></h3>
             </div>
@@ -178,6 +178,7 @@ var userno;
         console.log(db);
         var id=window.location.href;
         var template=document.getElementById("page");
+        var h=document.getElementById("t");
         var wishes=["Sending you wishes for a Christmas filled with inner peace and the strength to face whatever challenges lie ahead. May the New Year bring new beginnings and blessings.","May the joy of Christmas fill your home with warmth and laughter. Wishing you a season of merrymaking and memories that last a lifetime.","From our family to yours, warmest wishes for a blessed Christmas filled with love, good health, and prosperity. May the New Year bring new beginnings and brighter days.","Sending you a big Kerala hug and a basketful of Christmas cheer! May your holidays be merry and bright, with plenty of delicious food, good company, and laughter.","May the Christmas spirit bring you solace and strength in times of need. Wishing you a season of peace, hope, and renewed faith.","Let the light of Christmas guide you through darkness and uncertainty. May the coming year bring brighter days and a renewed sense of purpose."];
          
         const randomDecimal = Math.random();
@@ -191,25 +192,31 @@ var userno;
         }
    else if( randomNumber==1){
    template.style.background="url('temp5.jpg')";
-   template.style.backgroundSize="100% 100%";}
-
-
+   template.style.backgroundSize="100% 100%";
+h.innerText="Merry Christmas";
+   }
    else if( randomNumber==2)
    {
    template.style.background="url('temp6.jpg')";
-   template.style.backgroundSize="100% 100%";}
-
-
+   template.style.backgroundSize="100% 100%";
+h.innerText="Merry Christmas";
+   }
    else if( randomNumber==3)
    {
    template.style.background="url('temp2.jpg')";
-   template.style.backgroundSize="100% 100%";}
+   template.style.backgroundSize="100% 100%";
+   h.style.color="white";
+       h.innerText="Merry Christmas";
+       document.getElementById("body"). style.color="white";
+   }
 
 
    else if( randomNumber==4)
    {
    template.style.background="url('temp3.jpg')";
-   template.style.backgroundSize="100% 100%";}
+   template.style.backgroundSize="100% 100%";
+   h.innerText="Merry Christmas";
+   }
 
 // var h1=document.getElementById("title");
 //         window.onload = () => {
